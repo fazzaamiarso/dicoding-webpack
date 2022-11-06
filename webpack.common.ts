@@ -1,7 +1,9 @@
-import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import webpack from "webpack";
 import "webpack-dev-server";
+
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import ESLintPlugin from "eslint-webpack-plugin";
 
 const config: webpack.Configuration = {
   entry: "./src/index.ts",
@@ -16,6 +18,7 @@ const config: webpack.Configuration = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
+    new ESLintPlugin(),
   ],
   module: {
     rules: [
