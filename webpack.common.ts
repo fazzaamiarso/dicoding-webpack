@@ -4,7 +4,6 @@ import webpack from "webpack";
 import "webpack-dev-server";
 
 const config: webpack.Configuration = {
-  devtool: "inline-source-map",
   entry: "./src/index.ts",
   output: {
     filename: "main.js",
@@ -21,20 +20,17 @@ const config: webpack.Configuration = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
         test: /\.(js|ts)$/,
         exclude: /node_modules/,
         use: [
           {
             loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env", "@babel/preset-typescript"],
-            },
           },
         ],
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
