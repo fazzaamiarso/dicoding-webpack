@@ -1,7 +1,8 @@
-const { merge } = require("webpack-merge");
-const webpackCommon = require("./webpack.common");
+import merge from "webpack-merge";
+import webpackCommon from "./webpack.common";
+import webpack from "webpack";
 
-module.exports = merge(webpackCommon, {
+const config: webpack.Configuration = merge(webpackCommon, {
   mode: "production",
   module: {
     rules: [
@@ -20,3 +21,5 @@ module.exports = merge(webpackCommon, {
     ],
   },
 });
+
+export default config;
