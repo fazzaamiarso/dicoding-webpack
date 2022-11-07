@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/comma-dangle */
 /* eslint-disable no-underscore-dangle */
 import styles from './question-card.styles.scss';
 import { Question } from '../lib/trivia';
@@ -5,7 +6,9 @@ import { Question } from '../lib/trivia';
 class QuestionCard extends HTMLElement {
   shadow: ShadowRoot;
 
-  _question: Question;
+  private _question: Question;
+
+  private _clickEvent: (e: Event) => void;
 
   constructor() {
     super();
@@ -21,26 +24,41 @@ class QuestionCard extends HTMLElement {
     this.render();
   }
 
+  set clickEvent(val: (e: Event) => void) {
+    this._clickEvent = val;
+  }
+
+  private createAnswers() {
+    const { incorrectAnswers, correctAnswer } = this._question;
+    const answers = incorrectAnswers.concat(correctAnswer);
+    const container = document.createElement('ul');
+
+    answers.forEach((answer) => {
+      const answerEl = document.createElement('li');
+      const button = document.createElement('button');
+      button.innerText = answer;
+      button.value = answer;
+      button.onclick = this._clickEvent;
+
+      answerEl.appendChild(button);
+      container.appendChild(answerEl);
+    });
+    return container;
+  }
+
   private render() {
-    this.shadow.innerHTML = `
+    this.shadow.innerHTML = '';
+    const el = document.createRange().createContextualFragment(`
     <div>
     <h2>${this._question.question}</h2>
-    <ul id="answers"></ul>
-    </div>`;
+    </div>`);
 
     const style = document.createElement('style');
     style.textContent = styles;
     this.shadow.appendChild(style);
 
-    const { incorrectAnswers, correctAnswer } = this._question;
-    const answers = incorrectAnswers.concat(correctAnswer);
-    answers.forEach((a) => {
-      const liElement = document.createElement('li');
-      const button = document.createElement('button');
-      button.innerText = a;
-      liElement.appendChild(button);
-      this.shadow.getElementById('answers').appendChild(liElement);
-    });
+    el.append(this.createAnswers());
+    this.shadow.appendChild(el);
   }
 }
 customElements.define('question-card', QuestionCard);
