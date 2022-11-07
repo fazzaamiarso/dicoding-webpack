@@ -6,17 +6,17 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 
 const config: webpack.Configuration = {
-  entry: "./src/index.ts",
+  entry: './src/index.ts',
   output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: ['.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
+      template: './src/index.html',
     }),
     new ESLintPlugin(),
   ],
@@ -27,13 +27,29 @@ const config: webpack.Configuration = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "babel-loader",
+            loader: 'babel-loader',
           },
         ],
       },
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        test: /\.(scss|css)$/i,
+        exclude: [/\.styles.scss$/],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.styles.scss$/,
+        exclude: /node_modules/,
+        use: [
+          'sass-to-string',
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
+                outputStyle: 'compressed',
+              },
+            },
+          },
+        ],
       },
     ],
   },

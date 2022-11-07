@@ -1,12 +1,9 @@
 import './style.css';
 import 'regenerator-runtime/runtime';
 import './components/question-card';
+import type QuestionCard from './components/question-card';
 import triviaClient, { Question } from './lib/trivia';
-
-const getErrorMessage = (error: unknown) => {
-  if (error instanceof Error) return error.message;
-  return JSON.stringify(error);
-};
+import getErrorMessage from './utils/getErrorMessage';
 
 const getQuestions = async () => {
   try {
@@ -19,7 +16,7 @@ const getQuestions = async () => {
 
 getQuestions().then((data) => {
   data.forEach((q) => {
-    const questionCard = document.createElement('question-card');
+    const questionCard = document.createElement('question-card') as QuestionCard;
     questionCard.question = q;
     document.body.appendChild(questionCard);
   });

@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import styles from './question-card.styles.scss';
 import { Question } from '../lib/trivia';
 
 class QuestionCard extends HTMLElement {
@@ -27,12 +28,21 @@ class QuestionCard extends HTMLElement {
     <ul id="answers"></ul>
     </div>`;
 
-    this._question.incorrectAnswers.forEach((a) => {
+    const style = document.createElement('style');
+    style.textContent = styles;
+    this.shadow.appendChild(style);
+
+    const { incorrectAnswers, correctAnswer } = this._question;
+    const answers = incorrectAnswers.concat(correctAnswer);
+    answers.forEach((a) => {
       const liElement = document.createElement('li');
-      liElement.innerText = a;
-      this.shadow.appendChild(liElement);
+      const button = document.createElement('button');
+      button.innerText = a;
+      liElement.appendChild(button);
+      this.shadow.getElementById('answers').appendChild(liElement);
     });
   }
 }
-
 customElements.define('question-card', QuestionCard);
+
+export default QuestionCard;
