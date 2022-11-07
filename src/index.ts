@@ -1,11 +1,7 @@
 import './style.css';
 import 'regenerator-runtime/runtime';
-import axios from 'axios';
-
-const TRIVIA_API_ENDPOINT = 'https://the-trivia-api.com/api';
-const triviaClient = axios.create({
-  baseURL: TRIVIA_API_ENDPOINT,
-});
+import './components/question-card';
+import triviaClient, { Question } from './lib/trivia';
 
 const getErrorMessage = (error: unknown) => {
   if (error instanceof Error) return error.message;
@@ -15,10 +11,16 @@ const getErrorMessage = (error: unknown) => {
 const getQuestions = async () => {
   try {
     const res = await triviaClient.get('/questions?limit=5');
-    document.body.textContent = res.data;
+    return res.data as Question[];
   } catch (err) {
     console.error(getErrorMessage(err));
   }
 };
 
-getQuestions().then(console.log);
+getQuestions().then((data) => {
+  data.forEach((q) => {
+    const questionCard = document.createElement('question-card');
+    questionCard.question = q;
+    document.body.appendChild(questionCard);
+  });
+});

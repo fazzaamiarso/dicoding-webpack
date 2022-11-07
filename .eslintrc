@@ -3,5 +3,8 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.eslint.json"
+  },
+  "rules": {
+    "consistent-return": "off"
   }
 }
