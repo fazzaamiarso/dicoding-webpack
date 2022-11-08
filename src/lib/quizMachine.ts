@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { assign, createMachine } from 'xstate';
 import getErrorMessage from '../utils/getErrorMessage';
 import triviaClient, { Question } from './trivia';
 
-const getQuestions = async () => {
+const getQuestions = async (ctx: QuizContext) => {
   try {
-    const res = await triviaClient.get('/questions?limit=1');
+    const res = await triviaClient.get(`/questions?limit=1&difficulty=${ctx.difficulty}`);
     return res.data as Question[];
   } catch (err) {
     console.error(getErrorMessage(err));
@@ -16,10 +17,12 @@ interface QuizContext {
   wrongAnswers: number;
   countdown: number;
   question: Question;
+  difficulty: 'easy' | 'medium' | 'hard' | null;
 }
 
 type QuizEvents =
   | { type: 'SELECT'; value: boolean }
+  | { type: 'DIFFICULTY'; select: QuizContext['difficulty'] }
   | { type: 'START' }
   | { type: 'STOP' }
   | { type: 'RESTART' }
@@ -34,10 +37,14 @@ const quizMachine = createMachine<QuizContext, QuizEvents>({
     wrongAnswers: 0,
     countdown: 20,
     question: null,
+    difficulty: null,
   },
   states: {
     idle: {
-      on: { START: 'playing' },
+      on: {
+        START: 'playing',
+        DIFFICULTY: { actions: assign({ difficulty: (_, ev) => ev.select }) },
+      },
     },
     playing: {
       initial: 'loading',
@@ -91,10 +98,11 @@ const quizMachine = createMachine<QuizContext, QuizEvents>({
         RESTART: {
           target: 'idle',
           actions: assign({
-            score: 0,
-            wrongAnswers: 0,
-            countdown: 20,
-            question: null,
+            score: (_) => 0,
+            wrongAnswers: (_) => 0,
+            countdown: (_) => 20,
+            question: (_) => null,
+            difficulty: (ctx) => ctx.difficulty,
           }),
         },
       },
