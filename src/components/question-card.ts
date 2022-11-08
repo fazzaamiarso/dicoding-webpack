@@ -15,10 +15,6 @@ class QuestionCard extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' });
   }
 
-  connectedCallback() {
-    this.render();
-  }
-
   set question(val: Question) {
     this._question = val;
     this.render();
@@ -26,14 +22,16 @@ class QuestionCard extends HTMLElement {
 
   set clickEvent(val: (e: Event) => void) {
     this._clickEvent = val;
+    this.render();
   }
 
   private createAnswers() {
     const { incorrectAnswers, correctAnswer } = this._question;
     const answers = incorrectAnswers.concat(correctAnswer);
+    const shuffledAnswers = answers.sort(() => Math.random() - 0.5);
     const container = document.createElement('ul');
 
-    answers.forEach((answer) => {
+    shuffledAnswers.forEach((answer) => {
       const answerEl = document.createElement('li');
       const button = document.createElement('button');
       button.innerText = answer;
@@ -47,6 +45,7 @@ class QuestionCard extends HTMLElement {
   }
 
   private render() {
+    if (!this._question) return;
     this.shadow.innerHTML = '';
     const el = document.createRange().createContextualFragment(`
     <div>

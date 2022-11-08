@@ -11,7 +11,7 @@
       <h1>Trivia App</h1>
     </header>
     <main id="content">
-      <div id="home-page"> 
+      <div id="home-page">
         <select name="difficulty" id="select-difficulty">
           <option value="easy">Easy</option>
           <option value="medium">medium</option>
@@ -19,11 +19,19 @@
         </select>
         <button id="start-quiz">Start Quiz</button>
       </div>
-      <div id="question-page">
-        
+      <div id="question-page"  style="display: none;">
+        <div>
+          <div>Score: <span id="score"></span></div>
+          <div>Timer: <span id="countdown"></span></div>
+        </div>
+        <question-card id="question-card"></question-card>
       </div>
-      <div id="end-page">
-
+      <div id="end-page" style="display: none;">
+        <div>
+          <div>You Lost</div>
+          <div>Your total score is <span id="final-score"></span></div>
+        </div>
+        <button id="restart">Restart</button>
       </div>
     </main>
   </body>
