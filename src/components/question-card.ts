@@ -27,10 +27,9 @@ class QuestionCard extends HTMLElement {
 
   private createAnswers() {
     const { incorrectAnswers, correctAnswer } = this._question;
-    const answers = incorrectAnswers.concat(correctAnswer);
-    const shuffledAnswers = answers.sort(() => Math.random() - 0.5);
-    const container = document.createElement('ul');
+    const shuffledAnswers = incorrectAnswers.concat(correctAnswer).sort(() => Math.random() - 0.5);
 
+    const container = document.createElement('ul');
     shuffledAnswers.forEach((answer) => {
       const answerEl = document.createElement('li');
       const button = document.createElement('button');
@@ -46,18 +45,16 @@ class QuestionCard extends HTMLElement {
 
   private render() {
     if (!this._question) return;
-    this.shadow.innerHTML = '';
-    const el = document.createRange().createContextualFragment(`
+    this.shadow.innerHTML = `
     <div>
-    <h2>${this._question.question}</h2>
-    </div>`);
+      <h2>${this._question.question}</h2>
+    </div>`;
 
     const style = document.createElement('style');
     style.textContent = styles;
-    this.shadow.appendChild(style);
 
-    el.append(this.createAnswers());
-    this.shadow.appendChild(el);
+    this.shadow.appendChild(style);
+    this.shadow.append(this.createAnswers());
   }
 }
 customElements.define('question-card', QuestionCard);

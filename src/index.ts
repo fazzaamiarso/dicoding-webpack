@@ -8,6 +8,7 @@ import './components/question-card';
 import { interpret } from 'xstate';
 import type QuestionCard from './components/question-card';
 import quizMachine from './lib/quizMachine';
+import { QuestionDifficulty } from './lib/trivia';
 
 function changePage(page: 'home' | 'question' | 'end') {
   const questionPage = document.getElementById('question-page');
@@ -23,10 +24,12 @@ const startButton = document.getElementById('start-quiz');
 const scoreEl = document.getElementById('score');
 const countdownEl = document.getElementById('countdown');
 const questionCard = document.getElementById('question-card') as QuestionCard;
+const finalScoreEl = document.getElementById('final-score');
+const restartButton = document.getElementById('restart');
+const selectDifficultyEl = document.getElementById('select-difficulty') as HTMLSelectElement;
 
 startButton.onclick = () => {
-  const selectDifficultyEl = document.getElementById('select-difficulty') as HTMLSelectElement;
-  const machine = quizMachine(selectDifficultyEl.value as 'easy' | 'medium' | 'hard');
+  const machine = quizMachine(selectDifficultyEl.value as QuestionDifficulty);
   const quizService = interpret(machine);
 
   quizService.start();
@@ -36,11 +39,7 @@ startButton.onclick = () => {
 
     if (state.matches('end')) {
       changePage('end');
-
-      const finalScoreEl = document.getElementById('final-score');
       finalScoreEl.innerText = ctx.score.toString();
-
-      const restartButton = document.getElementById('restart');
       restartButton.onclick = () => quizService.stop();
     }
     if (state.matches('playing.loaded')) {
@@ -57,9 +56,10 @@ startButton.onclick = () => {
     if (ctx.question?.id !== prev?.question?.id) {
       questionCard.question = ctx.question;
       questionCard.clickEvent = (e) => {
-        if (!(e.target instanceof HTMLButtonElement)) return;
-        const isCorrect = e.target.value === ctx.question.correctAnswer;
-        quizService.send({ type: 'SELECT', value: isCorrect });
+        const selectedAnswerEl = e.target;
+        if (!(selectedAnswerEl instanceof HTMLButtonElement)) return;
+        const isCorrect = selectedAnswerEl.value === ctx.question.correctAnswer;
+        quizService.send({ type: 'SELECT', isCorrect });
       };
     }
   });
