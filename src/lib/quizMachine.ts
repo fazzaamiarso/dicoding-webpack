@@ -18,7 +18,11 @@ interface QuizContext {
   question: Question;
 }
 
-type QuizEvents = { type: 'SELECT'; value: boolean } | { type: 'START' };
+type QuizEvents =
+  | { type: 'SELECT'; value: boolean }
+  | { type: 'START' }
+  | { type: 'STOP' }
+  | { type: 'RESTART' };
 
 const quizMachine = createMachine<QuizContext, QuizEvents>({
   id: 'quiz',
@@ -36,6 +40,7 @@ const quizMachine = createMachine<QuizContext, QuizEvents>({
     },
     playing: {
       initial: 'loading',
+      always: [{ target: 'end', cond: (ctx) => ctx.wrongAnswers === 3 }],
       states: {
         loading: {
           invoke: {
@@ -44,7 +49,7 @@ const quizMachine = createMachine<QuizContext, QuizEvents>({
             onDone: {
               target: 'loaded',
               actions: assign({
-                question: (ctx, ev) => ev.data[0],
+                question: (_, ev) => ev.data[0],
               }),
             },
             onError: 'failed',
@@ -64,7 +69,19 @@ const quizMachine = createMachine<QuizContext, QuizEvents>({
         failed: {},
       },
     },
-    end: {},
+    end: {
+      on: {
+        RESTART: {
+          target: 'idle',
+          actions: assign({
+            score: 0,
+            wrongAnswers: 0,
+            countdown: 20,
+            question: null,
+          }),
+        },
+      },
+    },
   },
 });
 
