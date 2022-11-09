@@ -18,21 +18,25 @@
     </header>
     <main id="content">
       <div id="home-page" class="layout">
-        <div class="">
+        <form id="game">
           <div class="setting">
-            <div class="select-container">
-              <label for="select-difficulty"> Select Difficulty </label>
-              <div class="select">
-                <select name="difficulty" id="select-difficulty">
-                  <option value="easy">Easy</option>
-                  <option value="medium">Medium</option>
-                  <option value="hard">Hard</option>
-                </select>
+            <fieldset>
+              <legend>Select difficulty</legend>
+              <div class="radio-container">
+                <label for="easy"
+                  ><input type="radio" name="difficulty" value="easy" id="easy" checked required />Easy</label
+                >
+                <label for="medium"
+                  ><input type="radio" name="difficulty" value="medium" id="medium" />Medium</label
+                >
+                <label for="hard"
+                  ><input type="radio" name="difficulty" value="hard" id="hard" />Hard</label
+                >
               </div>
-            </div>
+            </fieldset>
           </div>
-          <button id="start-quiz">Start Quiz</button>
-        </div>
+          <button id="start-quiz" type="submit">Start Quiz</button>
+        </form>
       </div>
       <div id="question-page" class="layout" style="display: none">
         <div class="state-board">

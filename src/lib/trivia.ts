@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
+import qs from 'qs';
 import getErrorMessage from '../utils/getErrorMessage';
 
 export type QuestionDifficulty = 'easy' | 'medium' | 'hard';
@@ -22,8 +23,12 @@ const triviaClient = axios.create({
 });
 
 export const getSingleQuestion = async (difficulty: QuestionDifficulty) => {
+  const queryString = qs.stringify({
+    limit: 1,
+    difficulty,
+  });
   try {
-    const res = await triviaClient.get(`/questions?limit=1&difficulty=${difficulty}`);
+    const res = await triviaClient.get(`/questions?${queryString}`);
     return res.data[0] as Question;
   } catch (err) {
     console.error(getErrorMessage(err));

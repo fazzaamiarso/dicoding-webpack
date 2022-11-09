@@ -1,6 +1,6 @@
-:root{
+:root {
   --content-bg: #4353cb;
-  --content-radius: 8px
+  --content-radius: 8px;
 }
 
 body {
@@ -23,6 +23,54 @@ header {
   h1 {
     font-weight: bold;
     font-size: 2rem;
+  }
+}
+
+#home-page {
+  display: flex;
+  flex-direction: column;
+  fieldset{
+    .radio-container{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+    legend{
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: white;
+      color:#3e4fbb;
+      border-radius: var(--content-radius);
+      font-weight: 500;
+      padding: .5rem 1rem;
+      cursor: pointer;
+      input{
+        accent-color: #4353cb;
+      }
+    }
+  }
+  button {
+    background: #ed5e04;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    border-radius: var(--content-radius);
+    transition: all ease-in-out 300ms;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    &:hover {
+      background-color: #ce5103;
+    }
+  }
+  .setting {
+    border-radius: var(--content-radius);
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: var(--content-bg);
   }
 }
 
@@ -63,28 +111,6 @@ header {
     width: 2rem;
   }
 }
-#home-page {
-  display: flex;
-  flex-direction: column;
-  select {
-    padding: 0.25rem 0.5rem;
-    border-radius: 5px;
-    border: solid 1px black;
-    color: #000;
-  }
-  button {
-    background: #e25b07;
-    font-weight: 500;
-    padding: 1rem;
-    border-radius: 10px;
-  }
-  .setting{
-    border-radius: var(--content-radius);
-    margin-bottom: 2rem;
-    padding: 2rem;
-    background: var(--content-bg);
-  }
-}
 
 #end-page {
   .game-over {
@@ -109,6 +135,11 @@ header {
       display: flex;
       align-items: center;
       gap: 10px;
+      transition: all ease-in-out 300ms;
+
+      &:hover {
+        background-color: #ce5103;
+      }
     }
     .score {
       margin-bottom: 2rem;
