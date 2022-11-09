@@ -2,33 +2,50 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-header {
-  padding: 2rem;
-  h1 {
-    font-weight: bold;
-    font-size: 2rem;
-  }
-}
-
-.layout{
+.layout {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
   max-width: 768px;
 }
 
+header {
+  padding-block: 1rem;
+  margin-bottom: 2rem;
+  h1 {
+    font-weight: bold;
+    font-size: 2rem;
+  }
+}
+
 #question-page {
-  #health{
+  .state-board {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .state {
+    .text {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    span {
+      font-size: 2rem;
+      font-weight: 500;
+    }
+  }
+  #health {
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 1rem;
   }
-  .life{
-    background: black;
-    border-radius: 1000000px;
-    height: 1rem;
-    width: 1rem;
-
+  .life {
+    height: 2rem;
+    width: 2rem;
   }
 }
 #home-page {
@@ -38,9 +55,40 @@ header {
     margin-left: auto;
     margin-right: auto;
     button {
-      background: pink;
+      background: black;
+      color: white;
       padding: 1rem;
       border-radius: 10px;
+    }
+  }
+}
+
+#end-page {
+  .game-over {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    h2 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+    button {
+      border-radius: 10px;
+      padding: 0.5rem 1.5rem;
+      background-color: black;
+      color: white;
+    }
+    .score {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      #final-score {
+        font-size: 2rem;
+        font-weight: 500;
+      }
     }
   }
 }
