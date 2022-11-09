@@ -29,14 +29,14 @@ header {
 #home-page {
   display: flex;
   flex-direction: column;
-  fieldset{
-    .radio-container{
+  fieldset {
+    .radio-container {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 1rem;
     }
-    legend{
+    legend {
       font-size: 1.25rem;
       margin-bottom: 1rem;
     }
@@ -45,12 +45,12 @@ header {
       align-items: center;
       gap: 10px;
       background-color: white;
-      color:#3e4fbb;
+      color: #3e4fbb;
       border-radius: var(--content-radius);
       font-weight: 500;
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
       cursor: pointer;
-      input{
+      input {
         accent-color: #4353cb;
       }
     }
@@ -75,15 +75,27 @@ header {
 }
 
 #question-page {
-  .state-board {
+  margin-bottom: 3rem;
+  .game-board {
+    display: flex;
+    flex-direction: row;
     padding: 1rem 2rem;
     border-radius: var(--content-radius);
     background: var(--content-bg);
-    display: flex;
     align-items: center;
+    justify-content: space-between;
+
     width: 100%;
     gap: 2rem;
     margin-bottom: 2rem;
+    @media screen and (max-width: 450px) {
+      flex-direction: column;
+    }
+  }
+  .state-board {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
   }
   .state {
     display: flex;
@@ -100,7 +112,6 @@ header {
     }
   }
   #health {
-    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -154,9 +165,3 @@ header {
   }
 }
 
-.home {
-  button {
-    padding: 1rem;
-    border-radius: 10px;
-  }
-}

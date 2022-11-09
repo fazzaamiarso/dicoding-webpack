@@ -34,7 +34,10 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
       states: {
         playing: {
           initial: 'loading',
-          always: [{ target: 'end', cond: 'isLost' }],
+          always: [
+            { target: 'end', cond: 'isLost' },
+            { target: '.loading', actions: 'selectAnswer', cond: 'isTimesUp' },
+          ],
           states: {
             loading: {
               invoke: {
@@ -78,7 +81,8 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
     },
     {
       guards: {
-        isLost: (ctx) => ctx.wrongAnswers === MAX_WRONG_ANSWERS || ctx.countdown === 0,
+        isLost: (ctx) => ctx.wrongAnswers === MAX_WRONG_ANSWERS,
+        isTimesUp: (ctx) => ctx.countdown === 0,
       },
       actions: {
         decrementCountdown: assign({ countdown: (ctx) => ctx.countdown - 1 }),

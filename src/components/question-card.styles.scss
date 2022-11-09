@@ -24,6 +24,9 @@ ul {
     font-weight: 500;
     background-color: white;
     transition: all ease-in-out 100ms;
+    &:hover{
+      opacity: .9;
+    }
     &.correct {
       background-color: #65cb43;
       color: white;
