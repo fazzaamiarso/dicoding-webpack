@@ -1,28 +1,37 @@
-@import "../reset";
+@import '../reset';
 
-
-h2{
-    font-weight: 500;
-    font-size:  1.5rem;
+h2 {
+  font-weight: 500;
+  font-size: 1.5rem;
 }
 
-#card{
-    padding: 2rem;
-    background: #4353cb;
-    border-radius: 8px;
+#card {
+  padding: 2rem;
+  background: #4353cb;
+  border-radius: 8px;
 }
 
 ul {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2rem;
-    button{
-        border-radius: 8px;
-        width: 100%;
-        padding: 1rem;
-        color: #3e4fbb;
-        font-weight: 500;
-        background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  button {
+    border-radius: 8px;
+    width: 100%;
+    padding: 1rem;
+    color: #3e4fbb;
+    font-weight: 500;
+    background-color: white;
+    transition: all ease-in-out 100ms;
+    &.correct {
+      background-color: #65cb43;
+      color: white;
     }
+    &.wrong {
+      background-color: #cb4343;
+      color: white;
+
+    }
+  }
 }

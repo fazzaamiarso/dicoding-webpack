@@ -8,7 +8,7 @@ class QuestionCard extends HTMLElement {
 
   private _question: Question;
 
-  private _clickEvent: (e: Event) => void;
+  private _clickEvent: (selectedValue: string) => boolean;
 
   constructor() {
     super();
@@ -20,7 +20,7 @@ class QuestionCard extends HTMLElement {
     this.render();
   }
 
-  set clickEvent(val: (e: Event) => void) {
+  set clickEvent(val: (selectedValue: string) => boolean) {
     this._clickEvent = val;
     this.render();
   }
@@ -35,7 +35,13 @@ class QuestionCard extends HTMLElement {
       const button = document.createElement('button');
       button.innerText = answer;
       button.value = answer;
-      button.onclick = this._clickEvent;
+      button.onclick = (e) => {
+        const selectedAnswerEl = e.target;
+        if (!(selectedAnswerEl instanceof HTMLButtonElement)) return;
+
+        const isCorrect = this._clickEvent(answer);
+        button.classList.add(isCorrect ? 'correct' : 'wrong');
+      };
 
       answerEl.appendChild(button);
       container.appendChild(answerEl);
