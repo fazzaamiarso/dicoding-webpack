@@ -84,7 +84,7 @@ form.addEventListener(
         ? ctx.countdown.toString()
         : quizService.initialState.context.countdown.toString();
 
-      if (ctx.wrongAnswers > 0 && ctx.wrongAnswers !== prev?.wrongAnswers) {
+      if (ctx.wrongAnswers < MAX_WRONG_ANSWERS && ctx.wrongAnswers !== prev?.wrongAnswers) {
         healthEl.firstChild.remove();
       }
 
@@ -92,7 +92,9 @@ form.addEventListener(
         questionCard.question = ctx.question;
         questionCard.clickEvent = (selected) => {
           const isCorrect = selected === ctx.question.correctAnswer;
-          quizService.send({ type: 'SELECT', isCorrect });
+          setTimeout(() => {
+            quizService.send({ type: 'SELECT', isCorrect });
+          }, 500);
           return isCorrect;
         };
       }

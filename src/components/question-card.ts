@@ -35,17 +35,23 @@ class QuestionCard extends HTMLElement {
       const button = document.createElement('button');
       button.innerText = answer;
       button.value = answer;
-      button.onclick = (e) => {
-        const selectedAnswerEl = e.target;
-        if (!(selectedAnswerEl instanceof HTMLButtonElement)) return;
-
-        const isCorrect = this._clickEvent(answer);
-        button.classList.add(isCorrect ? 'correct' : 'wrong');
-      };
 
       answerEl.appendChild(button);
       container.appendChild(answerEl);
     });
+
+    container.onclick = (e) => {
+      const selectedAnswerEl = e.target;
+      if (!(selectedAnswerEl instanceof HTMLButtonElement)) return;
+
+      container.querySelectorAll('button').forEach((el) => {
+        // eslint-disable-next-line no-param-reassign
+        el.disabled = true;
+      });
+      const isCorrect = this._clickEvent(selectedAnswerEl.value);
+      selectedAnswerEl.classList.add(isCorrect ? 'correct' : 'wrong');
+    };
+    
     return container;
   }
 
