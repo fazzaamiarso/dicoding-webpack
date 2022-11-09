@@ -2,6 +2,8 @@
 import { assign, createMachine } from 'xstate';
 import { getSingleQuestion, Question, QuestionDifficulty } from './trivia';
 
+export const MAX_WRONG_ANSWERS = 3;
+
 interface QuizContext {
   score: number;
   wrongAnswers: number;
@@ -64,6 +66,7 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
                 SELECT: {
                   target: 'loading',
                   actions: 'selectAnswer',
+                  in: '#quiz.playing.loaded',
                 },
               },
             },
@@ -75,7 +78,7 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
     },
     {
       guards: {
-        isLost: (ctx) => ctx.wrongAnswers === 3 || ctx.countdown === 0,
+        isLost: (ctx) => ctx.wrongAnswers === MAX_WRONG_ANSWERS || ctx.countdown === 0,
       },
       actions: {
         decrementCountdown: assign({ countdown: (ctx) => ctx.countdown - 1 }),
@@ -83,6 +86,7 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
           question: (_, ev: any) => ev.data,
         }),
         selectAnswer: assign({
+          // For some reason, XState wants all method have the same number of parmaters defined all though not used.
           wrongAnswers: (ctx, ev: any) => (ev.isCorrect ? ctx.wrongAnswers : ctx.wrongAnswers + 1),
           score: (ctx, ev: any) => (ev.isCorrect ? ctx.score + 1 : ctx.score),
           countdown: (ctx, ev) => 20,

@@ -7,7 +7,7 @@ import 'regenerator-runtime/runtime';
 import './components/question-card';
 import { interpret } from 'xstate';
 import type QuestionCard from './components/question-card';
-import quizMachine from './lib/quizMachine';
+import quizMachine, { MAX_WRONG_ANSWERS } from './lib/quizMachine';
 import { QuestionDifficulty } from './lib/trivia';
 
 function changePage(page: 'home' | 'question' | 'end') {
@@ -27,12 +27,20 @@ const questionCard = document.getElementById('question-card') as QuestionCard;
 const finalScoreEl = document.getElementById('final-score');
 const restartButton = document.getElementById('restart');
 const selectDifficultyEl = document.getElementById('select-difficulty') as HTMLSelectElement;
+const healthEl = document.getElementById('health');
 
 startButton.onclick = () => {
   const machine = quizMachine(selectDifficultyEl.value as QuestionDifficulty);
   const quizService = interpret(machine);
 
   quizService.start();
+
+  Array(MAX_WRONG_ANSWERS)
+    .fill('0')
+    .forEach(() => {
+      const lifeEl = document.createRange().createContextualFragment(`<div class="life"></div>`);
+      healthEl.appendChild(lifeEl);
+    });
 
   quizService.onTransition((state) => {
     const ctx = state.context;
@@ -50,6 +58,9 @@ startButton.onclick = () => {
   quizService.onChange((ctx, prev) => {
     scoreEl.innerText = prev.score ? ctx.score.toString() : '0';
 
+    if (ctx.wrongAnswers > 0 && ctx.wrongAnswers !== prev?.wrongAnswers) {
+      healthEl.lastChild.remove();
+    }
     if (ctx.countdown !== prev?.countdown) {
       countdownEl.innerText = ctx.countdown.toString();
     }

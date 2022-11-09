@@ -1,3 +1,19 @@
+@import "../reset";
+
+
+h2{
+    font-weight: 500;
+    font-size:  1.5rem;
+}
+
 ul {
-    background-color: red;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+    button{
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid black;
+    }
 }

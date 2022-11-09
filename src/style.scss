@@ -1,6 +1,53 @@
-.home {
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+header {
+  padding: 2rem;
+  h1 {
+    font-weight: bold;
+    font-size: 2rem;
+  }
+}
+
+.layout{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 768px;
+}
+
+#question-page {
+  #health{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .life{
+    background: black;
+    border-radius: 1000000px;
+    height: 1rem;
+    width: 1rem;
+
+  }
+}
+#home-page {
+  display: flex;
+  flex-direction: column;
+  .menu {
+    margin-left: auto;
+    margin-right: auto;
     button {
-        padding: 1rem;
-        border-radius: 10px;
+      background: pink;
+      padding: 1rem;
+      border-radius: 10px;
     }
+  }
+}
+
+.home {
+  button {
+    padding: 1rem;
+    border-radius: 10px;
+  }
 }

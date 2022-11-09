@@ -46,14 +46,14 @@ class QuestionCard extends HTMLElement {
   private render() {
     if (!this._question) return;
     this.shadow.innerHTML = `
-    <div>
+    <div class="card">
       <h2>${this._question.question}</h2>
     </div>`;
 
     const style = document.createElement('style');
     style.textContent = styles;
 
-    this.shadow.appendChild(style);
+    this.shadow.append(style);
     this.shadow.append(this.createAnswers());
   }
 }
