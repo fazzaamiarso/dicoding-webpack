@@ -6,14 +6,23 @@ h2{
     font-size:  1.5rem;
 }
 
+#card{
+    padding: 2rem;
+    background: #4353cb;
+    border-radius: 8px;
+}
+
 ul {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
     margin-top: 2rem;
     button{
+        border-radius: 8px;
         width: 100%;
         padding: 1rem;
-        border: 1px solid black;
+        color: #3e4fbb;
+        font-weight: 500;
+        background-color: white;
     }
 }
