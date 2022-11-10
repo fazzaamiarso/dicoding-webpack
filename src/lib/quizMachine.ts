@@ -84,9 +84,7 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
             failed: {},
           },
         },
-        end: {
-          type: 'final',
-        },
+        end: {},
       },
     },
     {

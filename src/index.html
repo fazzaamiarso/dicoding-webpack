@@ -15,6 +15,7 @@
   <body>
     <header class="layout">
       <h1>Trivia App</h1>
+      <div class="score-container">High score: <span id="high-score"></span></div>
     </header>
     <main id="content">
       <div id="home-page" class="layout">
@@ -24,7 +25,14 @@
               <legend>Select difficulty</legend>
               <div class="radio-container">
                 <label for="easy"
-                  ><input type="radio" name="difficulty" value="easy" id="easy" checked required />Easy</label
+                  ><input
+                    type="radio"
+                    name="difficulty"
+                    value="easy"
+                    id="easy"
+                    checked
+                    required
+                  />Easy</label
                 >
                 <label for="medium"
                   ><input type="radio" name="difficulty" value="medium" id="medium" />Medium</label

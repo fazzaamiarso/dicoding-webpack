@@ -8,9 +8,10 @@ import Toastify from 'toastify-js';
 import quizMachine, { MAX_WRONG_ANSWERS } from './lib/quizMachine';
 import { QuestionDifficulty } from './lib/trivia';
 import type QuestionCard from './components/question-card';
+import createScoreStorage from './utils/highScoreStorage';
 
+const scoreStorage = createScoreStorage();
 const questionCard = document.getElementById('question-card') as QuestionCard;
-const finalScoreEl = document.getElementById('final-score');
 const restartButton = document.getElementById('restart');
 const healthEl = document.getElementById('health');
 const form = document.getElementById('game') as HTMLFormElement;
@@ -50,6 +51,21 @@ const setCountdown = (val: number) => {
   el.innerText = val.toString();
 };
 
+const setFinalScore = (val: number) => {
+  const el = document.getElementById('final-score');
+  el.innerText = val.toString();
+};
+
+const setHighScore = (val: number) => {
+  const el = document.getElementById('high-score');
+  el.innerText = val.toString();
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedScore = scoreStorage.getHighScore();
+  setHighScore(savedScore);
+});
+
 let isMachineStarted = false;
 form.addEventListener(
   'submit',
@@ -82,7 +98,13 @@ form.addEventListener(
       if (state.matches('end')) {
         changePage('end');
         healthEl.innerHTML = '';
-        finalScoreEl.innerText = ctx.score.toString();
+        setFinalScore(ctx.score);
+
+        if (ctx.score > scoreStorage.getHighScore()) {
+          scoreStorage.saveHighScore(ctx.score);
+          setHighScore(ctx.score);
+        }
+
         restartButton.onclick = () => {
           quizService.stop();
           isMachineStarted = false;
