@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { assign, createMachine } from 'xstate';
 import { getSingleQuestion, Question, QuestionDifficulty } from './trivia';
 
 export const MAX_WRONG_ANSWERS = 3;
+const QUESTION_COUNTDOWN = 20;
 
 interface QuizContext {
   score: number;
@@ -28,7 +28,7 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
       context: {
         score: 0,
         wrongAnswers: 0,
-        countdown: 20,
+        countdown: QUESTION_COUNTDOWN,
         question: null,
         difficulty,
         errorMessage: undefined,
@@ -52,7 +52,7 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
                 onError: {
                   target: 'failed',
                   actions: assign({
-                    errorMessage: (ctx, ev) => ev.data,
+                    errorMessage: (_ctx, ev) => ev.data,
                   }),
                 },
               },
@@ -100,7 +100,8 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
           // For some reason, XState wants all method have the same number of parmaters defined all though not used.
           wrongAnswers: (ctx, ev: any) => (ev.isCorrect ? ctx.wrongAnswers : ctx.wrongAnswers + 1),
           score: (ctx, ev: any) => (ev.isCorrect ? ctx.score + 1 : ctx.score),
-          countdown: (ctx, ev) => 20,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          countdown: (_ctx, _ev) => QUESTION_COUNTDOWN,
         }),
       },
     }

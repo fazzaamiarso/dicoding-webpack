@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/comma-dangle */
-/* eslint-disable no-underscore-dangle */
 import styles from './question-card.styles.scss';
 import { Question } from '../../lib/trivia';
 
@@ -45,7 +43,6 @@ class QuestionCard extends HTMLElement {
       if (!(selectedAnswerEl instanceof HTMLButtonElement)) return;
 
       container.querySelectorAll('button').forEach((el) => {
-        // eslint-disable-next-line no-param-reassign
         el.disabled = true;
       });
       const isCorrect = this._clickEvent(selectedAnswerEl.value);

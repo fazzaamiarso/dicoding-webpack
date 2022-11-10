@@ -1,6 +1,3 @@
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import './styles/style.scss';
 import 'toastify-js/src/toastify.css';
 import 'regenerator-runtime/runtime';

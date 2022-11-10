@@ -5,6 +5,8 @@
     "project": "./tsconfig.eslint.json"
   },
   "rules": {
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off"
   }
 }
