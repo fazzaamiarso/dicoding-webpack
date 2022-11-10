@@ -4,6 +4,7 @@ import { getSingleQuestion, Question, QuestionDifficulty } from './trivia';
 export const MAX_WRONG_ANSWERS = 3;
 const QUESTION_COUNTDOWN = 20;
 
+
 interface QuizContext {
   score: number;
   wrongAnswers: number;
@@ -83,7 +84,9 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
             failed: {},
           },
         },
-        end: {},
+        end: {
+          type: 'final',
+        },
       },
     },
     {
