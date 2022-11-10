@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/comma-dangle */
 /* eslint-disable no-underscore-dangle */
 import styles from './question-card.styles.scss';
-import { Question } from '../lib/trivia';
+import { Question } from '../../lib/trivia';
 
 class QuestionCard extends HTMLElement {
   shadow: ShadowRoot;
@@ -51,7 +51,7 @@ class QuestionCard extends HTMLElement {
       const isCorrect = this._clickEvent(selectedAnswerEl.value);
       selectedAnswerEl.classList.add(isCorrect ? 'correct' : 'wrong');
     };
-    
+
     return container;
   }
 
@@ -65,8 +65,8 @@ class QuestionCard extends HTMLElement {
     const style = document.createElement('style');
     style.textContent = styles;
 
-    this.shadow.append(style);
     this.shadow.getElementById('card').appendChild(this.createAnswers());
+    this.shadow.append(style);
   }
 }
 customElements.define('question-card', QuestionCard);

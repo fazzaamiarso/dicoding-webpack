@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import axios from 'axios';
 import qs from 'qs';
 import getErrorMessage from '../utils/getErrorMessage';
@@ -17,10 +16,11 @@ export interface Question {
 }
 
 const TRIVIA_API_ENDPOINT = 'https://the-trivia-api.com/api';
+const REQUEST_TIMEOUT = 20000;
 
 const triviaClient = axios.create({
   baseURL: TRIVIA_API_ENDPOINT,
-  timeout: 1,
+  timeout: REQUEST_TIMEOUT,
 });
 
 export const getSingleQuestion = async (difficulty: QuestionDifficulty) => {
