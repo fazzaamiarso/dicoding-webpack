@@ -20,6 +20,7 @@ const TRIVIA_API_ENDPOINT = 'https://the-trivia-api.com/api';
 
 const triviaClient = axios.create({
   baseURL: TRIVIA_API_ENDPOINT,
+  timeout: 1,
 });
 
 export const getSingleQuestion = async (difficulty: QuestionDifficulty) => {
@@ -31,7 +32,7 @@ export const getSingleQuestion = async (difficulty: QuestionDifficulty) => {
     const res = await triviaClient.get(`/questions?${queryString}`);
     return res.data[0] as Question;
   } catch (err) {
-    console.error(getErrorMessage(err));
+    throw new Error(getErrorMessage(err));
   }
 };
 

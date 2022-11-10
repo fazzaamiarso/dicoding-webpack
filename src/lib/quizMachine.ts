@@ -10,6 +10,7 @@ interface QuizContext {
   countdown: number;
   question: Question;
   difficulty: QuestionDifficulty;
+  errorMessage: string | undefined;
 }
 
 type QuizEvents =
@@ -30,6 +31,7 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
         countdown: 20,
         question: null,
         difficulty,
+        errorMessage: undefined,
       },
       states: {
         playing: {
@@ -47,7 +49,12 @@ const quizMachine = (difficulty: QuestionDifficulty) =>
                   target: 'loaded',
                   actions: 'setQuestion',
                 },
-                onError: 'failed',
+                onError: {
+                  target: 'failed',
+                  actions: assign({
+                    errorMessage: (ctx, ev) => ev.data,
+                  }),
+                },
               },
             },
             loaded: {
